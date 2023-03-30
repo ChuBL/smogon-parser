@@ -35,7 +35,6 @@ def download_files(url, dir_path=data_dir):
             new_dir = os.path.join(dir_path, text)
             download_files(new_url, new_dir)
 
-# download_files(url)
 
 def batch_download_by_year(YEAR):
     response = requests.get(url)
@@ -57,7 +56,7 @@ def batch_download_by_year(YEAR):
     year_dir = os.path.join(data_dir, str(YEAR))
     download_files(year_url, year_dir)
 
-def test_parse():
+def _test_parse():
     response = requests.get(url)
     parsed_body = html.fromstring(response.content)
     link = parsed_body.xpath("/html/body/pre/a[999]")[0]
