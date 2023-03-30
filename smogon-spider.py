@@ -14,7 +14,7 @@ def download_files(url, dir_path=data_dir):
     response = requests.get(url)
     parsed_body = html.fromstring(response.content)
    
-    for index in range(1, 9999):
+    for index in range(1, 65535):
         try:
             link = parsed_body.xpath("/html/body/pre/a[{index}]".format(index=index))[0]
         except IndexError:
@@ -30,6 +30,7 @@ def download_files(url, dir_path=data_dir):
             with open(file_path, "wb") as f:
                 f.write(r.content)
             print("Downloaded", file_url)
+            #sys.exit()
         else:
             new_url = url + text
             new_dir = os.path.join(dir_path, text)
@@ -39,7 +40,7 @@ def download_files(url, dir_path=data_dir):
 def batch_download_by_year(YEAR):
     response = requests.get(url)
     parsed_body = html.fromstring(response.content)
-    for index in range(1, 9999):
+    for index in range(1, 65535):
         try:
             link = parsed_body.xpath("/html/body/pre/a[{index}]".format(index=index))[0]
         except IndexError:
@@ -51,10 +52,10 @@ def batch_download_by_year(YEAR):
             new_dir = os.path.join(data_dir, str(YEAR), text)
             download_files(new_url, new_dir)
 
-
     year_url = url + str(YEAR) + "/"
     year_dir = os.path.join(data_dir, str(YEAR))
     download_files(year_url, year_dir)
+    
 
 def _test_parse():
     response = requests.get(url)
